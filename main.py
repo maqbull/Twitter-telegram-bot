@@ -11,8 +11,8 @@ load_dotenv("keys.env")
 API_TOKEN = str(os.getenv("TELEGRAM_BOT"))
 
 def startbot():
-    Twitter_stream =  ts.TweetBot()
-    Twitter_stream.fetch_tweets()
+    twitter_stream = ts.TweetBot()
+    twitter_stream.fetch_tweets()
 
 if __name__ == '__main__':
     updater = Updater(token=API_TOKEN,use_context=True)

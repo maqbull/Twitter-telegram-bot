@@ -2,8 +2,9 @@ import html
 import os
 import time
 import tweepy as tp
-from telegram import Bot
-from telegram import ParseMode
+import telegram
+# from telegram import bot
+
 import json
 from userslist import *
 from dotenv import load_dotenv
@@ -14,7 +15,7 @@ chatid = int(os.getenv("CHAT_ID"))
 
 class TwitterStream(tp.StreamListener):
 
-    def on_data(self,data):
+    def on_data(self, data):
         try:
             tb = TweetBot()
             d = json.loads(data)
@@ -29,14 +30,17 @@ class TwitterStream(tp.StreamListener):
                 tg_text = d['extended_tweet']['full_text']
             else:
                 tg_text = d['text']
-            #print(reply)
-            if(str(reply) == 'None'):
-                if('RT @' not in tg_text):    
-                    bot = Bot(token=token)
+            print(reply)
+            # print(tg_text)
+            if( str (reply) == 'None'):
+                if('RT @' not in tg_text):
+                    bot = telegram.Bot(token=token)
+                    # Bot = bot.Bot(token=token)
                     if has_media:
-                        bot.sendMessage(chat_id=chatid,text=tg_text+"\n"+tweet_url+"\n"+"Via"+"|"+"<a href='"+tweet_link+"'>"+tw_name+"</a>"+"|",timeout=200,disable_web_page_preview=False,parse_mode=ParseMode.HTML)
+                        bot.sendMessage(chat_id=chatid, text=tg_text+"\n"+tweet_url+"\n"+"Via"+"|"+"<a href='"+tweet_link+"'>"+tw_name+"</a>"+"|",timeout=200,disable_web_page_preview=False,parse_mode=Telegram.ParseMode.HTML)
                     else:
-                         bot.sendMessage(chat_id=chatid,text=tg_text+"\n"+tweet_url+"\n"+"Via"+"|"+"<a href='"+tweet_link+"'>"+tw_name+"</a>"+"|",timeout=200,disable_web_page_preview=True,parse_mode=ParseMode.HTML)   
+                        print("sending")
+                        bot.sendMessage(chat_id=chatid,text=tg_text+"\n"+tweet_url+"\n"+"Via"+"|"+"<a href='"+tweet_link+"'>"+tw_name+"</a>"+"|",timeout=200,disable_web_page_preview=True,parse_mode=Telegram.ParseMode.HTML)
                     time.sleep(3)
                 else:
                     print("It's a retweet so not posting it")
@@ -76,7 +80,7 @@ class TweetBot():
         listener = TwitterStream()
         account_list = self.get_tweet_acid(userslist)
         stream_tweet = tp.Stream(api,listener,tweet_mode='extended')
-        stream_tweet.filter(follow=account_list)
+        stream_tweet.filter(follow = account_list)
 
     def get_tweet_acid(self,user_list):
         api = self.authorize()
