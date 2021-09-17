@@ -37,10 +37,10 @@ class TwitterStream(tp.StreamListener):
                     bot = telegram.Bot(token=token)
                     # Bot = bot.Bot(token=token)
                     if has_media:
-                        bot.sendMessage(chat_id=chatid, text=tg_text+"\n"+tweet_url+"\n"+"Via"+"|"+"<a href='"+tweet_link+"'>"+tw_name+"</a>"+"|",timeout=200,disable_web_page_preview=False,parse_mode=Telegram.ParseMode.HTML)
+                        bot.sendMessage(chat_id=chatid, text=tg_text+"\n"+tweet_url+"\n"+"Via"+"|"+"<a href='"+tweet_link+"'>"+tw_name+"</a>"+"|",timeout=200,disable_web_page_preview=False,parse_mode=telegram.ParseMode.HTML)
                     else:
                         print("sending")
-                        bot.sendMessage(chat_id=chatid,text=tg_text+"\n"+tweet_url+"\n"+"Via"+"|"+"<a href='"+tweet_link+"'>"+tw_name+"</a>"+"|",timeout=200,disable_web_page_preview=True,parse_mode=Telegram.ParseMode.HTML)
+                        bot.sendMessage(chat_id=chatid,text=tg_text+"\n"+tweet_url+"\n"+"Via"+"|"+"<a href='"+tweet_link+"'>"+tw_name+"</a>"+"|",timeout=200,disable_web_page_preview=True,parse_mode=telegram.ParseMode.HTML)
                     time.sleep(3)
                 else:
                     print("It's a retweet so not posting it")
