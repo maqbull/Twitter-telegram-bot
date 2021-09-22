@@ -1,1 +1,1 @@
-userslist = ['AmitabhJha3','RishabPantFan']
+userslist = ['AmitabhJha3']
